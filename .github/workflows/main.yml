@@ -38,5 +38,5 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
-          #scp -r ./docs/.vuepress/dist/* $SSH_USERNAME@$SSH_HOST:$REMOTE_PATH
+          #scp -r ./.vuepress/dist/* $SSH_USERNAME@$SSH_HOST:$REMOTE_PATH
           sshpass -p $SSH_PASSWORD scp -r ./vitepress/dist/* root@$SSH_HOST:$REMOTE_PATH
