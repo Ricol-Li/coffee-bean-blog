@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: '咖啡豆的博客'
+  name: 'Enjoy Work Learning Life'
   # text: '学习笔记'
-  tagline: 前端、后端、运维
+  tagline: 技术学习、工作记录、生活分享
   actions:
     - theme: brand
       text: 前端

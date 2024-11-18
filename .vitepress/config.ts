@@ -2,6 +2,12 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  markdown: {
+    image: {
+      // 默认禁用图片懒加载
+      lazyLoading: true,
+    },
+  },
   title: '咖啡豆的博客',
   description: '前端、后端、运维学习笔记',
   head: [
@@ -13,7 +19,10 @@ export default defineConfig({
 
     nav: [
       { text: '首页', link: '/' },
-      { text: '前端', link: '/front-end/front-end' },
+      {
+        text: '前端',
+        link: '/front-end/front-end',
+      },
       { text: '后端', link: '/back-end/back-end' },
       { text: '运维', link: '/operation/operation' },
     ],
@@ -26,7 +35,7 @@ export default defineConfig({
             {
               text: '前端基础',
               collapsed: false,
-              link: '/front-end/01.basic/00.basic',
+              // link: '/front-end/01.basic/00.basic',
               items: [
                 {
                   text: 'JS数据类型',
@@ -41,8 +50,16 @@ export default defineConfig({
                   link: '/front-end/01.basic/03.heap、stack、ECStack',
                 },
                 {
-                  text: '函数（function）',
+                  text: '函数',
                   link: '/front-end/01.basic/04.function',
+                },
+                {
+                  text: '箭头函数',
+                  link: '/front-end/01.basic/04.arrow-function',
+                },
+                {
+                  text: '高阶函数',
+                  link: '/front-end/01.basic/04.higher-order-function',
                 },
                 {
                   text: '变量提升',
@@ -61,6 +78,10 @@ export default defineConfig({
                   link: '/front-end/01.basic/07.closure&combat',
                 },
                 {
+                  text: '正则表达式',
+                  link: '/front-end/01.basic/05.regexp',
+                },
+                {
                   text: 'let/const/var 的区别',
                   link: '/front-end/01.basic/08.let&const&var',
                 },
@@ -76,6 +97,18 @@ export default defineConfig({
                   text: '迭代器',
                   link: '/front-end/01.basic/11.iterator',
                 },
+                {
+                  text: 'Promise A+规范实现',
+                  link: '/front-end/01.basic/12.promise',
+                },
+                {
+                  text: '实现finally、catch、all、race方法',
+                  link: '/front-end/01.basic/12.promise_finally_catch_all_race',
+                },
+                {
+                  text: '浏览器事件循环',
+                  link: '/front-end/01.basic/13.event_loop',
+                },
               ],
             },
           ],
@@ -89,6 +122,41 @@ export default defineConfig({
       '/operation/': [
         {
           items: [{ text: '运维', link: '/operation/operation' }],
+        },
+        {
+          items: [
+            { text: 'DevOps', link: '/operation/DevOps/00.DevOps' },
+            {
+              text: 'Github Actions',
+              link: '/operation/DevOps/01.github-actions',
+            },
+          ],
+        },
+        {
+          items: [
+            {
+              text: 'Linux常用命令',
+              link: '/operation/linux/01.linux-command',
+            },
+          ],
+        },
+        {
+          items: [
+            {
+              text: 'Nginx',
+              collapsed: false,
+              items: [
+                {
+                  text: 'Nginx文件结构',
+                  link: '/operation/nginx/01.nginx各字段配置',
+                },
+                {
+                  text: 'Nginx配置示例',
+                  link: '/operation/nginx/02.nginx配置示例',
+                },
+              ],
+            },
+          ],
         },
       ],
     },
