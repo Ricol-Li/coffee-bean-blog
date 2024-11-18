@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: 'Enjoy Work Learning Life'
+  name: 'Work Learning Life'
   # text: '学习笔记'
-  tagline: 技术学习、工作记录、生活分享
+  tagline: 工作记录、技术学习、生活分享
   actions:
     - theme: brand
       text: 前端

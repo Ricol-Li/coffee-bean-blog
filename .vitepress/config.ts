@@ -8,7 +8,7 @@ export default defineConfig({
       lazyLoading: true,
     },
   },
-  title: '咖啡豆的博客',
+  title: 'Enjoyment Record',
   description: '前端、后端、运维学习笔记',
   head: [
     // 添加图标
