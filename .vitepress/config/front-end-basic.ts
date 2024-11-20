@@ -1,4 +1,4 @@
-const frontEndBasic = {
+const frontEndBasic: GlobalSideBarItemType = {
   text: '前端基础',
   collapsed: false,
   // link: '/front-end/01.basic/00.basic',
@@ -58,6 +58,14 @@ const frontEndBasic = {
     {
       text: '前端模块化规范及其进化史',
       link: '/front-end/01.basic/10.module',
+    },
+    {
+      text: '装饰器',
+      link: '/front-end/01.basic/11.decorator',
+    },
+    {
+      text: '生成器',
+      link: '/front-end/01.basic/11.generator',
     },
     {
       text: '迭代器',

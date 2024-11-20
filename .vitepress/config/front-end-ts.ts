@@ -1,10 +1,4 @@
-interface SideBarItemType {
-  text: string
-  collapsed?: boolean
-  items: Array<{ text: string; link: string }>
-}
-
-const frontEndTs: SideBarItemType = {
+const frontEndTs: GlobalSideBarItemType = {
   text: 'TypeScript',
   collapsed: false,
   items: [
