@@ -10,22 +10,33 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          node-version: 20.x
+          persist-credentials: false
 
-      - name: Build and Push Docker Images
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.16.0'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run docs:build
+
+      - name: Deploy to Nginx Server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # 私钥id_rsa
+          SSH_HOST: ${{ secrets.SSH_HOST }} # 云服务器IP地址
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }} # 云服务器密码
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }} # 云服务器用户名 默认为root
+          REMOTE_PATH: ${{ secrets.REMOTE_PATH }} # 云服务器部署目录 /home/blog/coffee-bean-blog/.vitepress/dist
         run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker-compose build
-          docker-compose push
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Deploy to Server
-        run: ssh -i ${{ secrets.SSH_PRIVATE_KEY }} root@${{ secrets.ALIYUN_SERVER_IP }} "docker-compose -f /home/dev-ops/docker-compose.yml up -d --force-recreate"
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
+          #scp -r ./.vuepress/dist/* $SSH_USERNAME@$SSH_HOST:$REMOTE_PATH
+          sshpass -p $SSH_PASSWORD scp -r ./.vitepress/dist/* root@$SSH_HOST:$REMOTE_PATH
