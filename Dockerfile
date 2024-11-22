@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # 构建项目
-RUN npm run build
+RUN npm run docs:build
 
 # 使用 Nginx 来服务静态文件
 FROM nginx:alpine
