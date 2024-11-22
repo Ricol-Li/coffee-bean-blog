@@ -16,20 +16,16 @@ jobs:
         with:
           node-version: 20.x
 
-      - name: Login to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-      - name: Build and push Docker images
+      - name: Build and Push Docker Images
         run: |
-          docker build -t liyunhao0626/blog:latest .
-          docker push liyunhao0626/blog:latest
-      - name: Deploy to Aliyun Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.ALIYUN_SERVER_IP }}
-          username: ${{ secrets.ALIYUN_SERVER_USER }}
-          password: ${{ secrets.ALIYUN_SERVER_PASSWORD }}
-          port: 22
-          script: |
-            cd /home/dev-ops
-            docker-compose pull
-            docker-compose up -d
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker-compose build
+          docker-compose push
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Deploy to Server
+        run: ssh -i ${{ secrets.SSH_PRIVATE_KEY }} root@${{ secrets.ALIYUN_SERVER_IP }} "docker-compose -f /home/dev-ops/docker-compose.yml up -d --force-recreate"
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}

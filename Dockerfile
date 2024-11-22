@@ -1,6 +1,8 @@
 # 使用官方 Node.js 运行环境作为基础镜像
 FROM node:16-alpine AS build
 
+# 复制代码
+ADD . /app
 # 设置工作目录
 WORKDIR /app
 
