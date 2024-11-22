@@ -15,28 +15,20 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18.16.0'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run docs:build
-
-      - name: Deploy to Nginx Server
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # 私钥id_rsa
-          SSH_HOST: ${{ secrets.SSH_HOST }} # 云服务器IP地址
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }} # 云服务器密码
-          SSH_USERNAME: ${{ secrets.SSH_USERNAME }} # 云服务器用户名 默认为root
-          REMOTE_PATH: ${{ secrets.REMOTE_PATH }} # 云服务器部署目录 /home/blog/coffee-bean-blog/.vitepress/dist
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Build and push Docker images
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
-          #scp -r ./.vuepress/dist/* $SSH_USERNAME@$SSH_HOST:$REMOTE_PATH
-          sshpass -p $SSH_PASSWORD scp -r ./.vitepress/dist/* root@$SSH_HOST:$REMOTE_PATH
+          docker build -t liyunhao0626/blog:latest .
+          docker push liyunhao0626/blog:latest
+      - name: Deploy to Aliyun Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.ALIYUN_SERVER_IP }}
+          username: ${{ secrets.ALIYUN_SERVER_USER }}
+          password: ${{ secrets.ALIYUN_SERVER_PASSWORD }}
+          port: 22
+          script: |
+            cd /home/dev-ops
+            docker-compose pull
+            docker-compose up -d
