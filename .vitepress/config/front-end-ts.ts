@@ -8,6 +8,10 @@ const frontEndTs: GlobalSideBarItemType = {
       text: 'keyof和typeof运算符',
       link: '/front-end/02.typescript/keyof和typeof',
     },
+    {
+      text: '泛型工具',
+      link: '/front-end/02.typescript/泛型工具',
+    },
   ],
 }
 
