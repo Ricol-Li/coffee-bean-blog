@@ -33,7 +33,7 @@ const frontEndBasic: GlobalSideBarItemType = {
     },
     {
       text: 'ES6中的块级上下文',
-      link: '/front-end/01.basic/06.ES6-block',
+      link: '/front-end/01.basic/06.ES6-Block',
     },
     {
       text: '闭包',
