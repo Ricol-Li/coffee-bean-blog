@@ -83,6 +83,10 @@ const frontEndBasic: GlobalSideBarItemType = {
       text: '浏览器事件循环',
       link: '/front-end/01.basic/13.event_loop',
     },
+    {
+      text: 'ES6+新特性',
+      link: '/front-end/01.basic/14.ES6+新特性',
+    },
   ],
 }
 
