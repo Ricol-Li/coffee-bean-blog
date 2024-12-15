@@ -87,6 +87,10 @@ const frontEndBasic: GlobalSideBarItemType = {
       text: 'ES6+新特性',
       link: '/front-end/01.basic/14.ES6+新特性',
     },
+    {
+      text: 'for...of与for..in',
+      link: '/front-end/01.basic/15.for-of与for-in.md',
+    },
   ],
 }
 
