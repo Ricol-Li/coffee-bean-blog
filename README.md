@@ -1,3 +1,3 @@
 # coffee-bean-blog
 
-咖啡豆的博客
+个人博客仓库
